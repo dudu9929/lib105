@@ -1,0 +1,13 @@
+<% if @room.errors.any? %>
+  <div class="errors">
+    <h3>
+      <%= pluralize(@room.errors.count, 'error') %>
+      prohibited this room from being saved:
+    </h3>
+    <ul>
+      <% @room.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

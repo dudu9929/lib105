@@ -1,0 +1,11 @@
+<%= form_for([@room, @booking]) do |f| %>
+  <p>
+    <%= f.label 'start_time', 'Start time' %>
+    <%= f.datetime_select :start_time, { minute_step: 60 } %>
+  </p>
+  <p>
+    <%= f.label 'length', 'Length of booking in hours' %>
+    <%= f.select :length, ['2']%>
+  </p>
+  <%= f.submit 'Submit' %>
+<% end %> 

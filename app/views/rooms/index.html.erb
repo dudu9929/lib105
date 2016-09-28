@@ -1,0 +1,30 @@
+<h3>rooms</h3>
+
+
+
+
+<% @rooms.each do |room| %>
+  <div class="room">
+    <%= room.name %>
+    <%= room.building %>
+    <%= room.size%>
+    <%= link_to "Show room information", room_path(room) %>
+    <%= link_to "Show all bookings", room_bookings_path(room) %>
+    <%= link_to "Show booking history", history_room_bookings_path(room) %>
+    <%= link_to "Delete", room_path(room), data: { confirm: 'Are you sure?' }, method: :delete %>
+    <%= link_to "Edit", edit_room_path(room) %>
+    <%= link_to "Add booking", new_room_booking_path(room) %>
+  </div>
+<% end %>
+<%= link_to 'New Room', new_room_path %>
+
+
+
+<%= form_tag(rooms_path, :method => "get", id: "search-form") do %>
+    <%= text_field_tag :name, params[:name], placeholder: "Search Name of Room" %>
+    <%= text_field_tag :building, params[:building], placeholder: "Search Building of Room" %>
+    <%= text_field_tag :size, params[:size], placeholder: "Search size of Room" %>
+    <%= submit_tag "Search", :name=> nil %>
+<% end %>
+
+

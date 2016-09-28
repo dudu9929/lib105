@@ -1,0 +1,10 @@
+<%= form_for @room do |f| %>
+  <%= render 'errors' %>
+  <%= f.label 'name', 'Name' %>
+  <%= f.text_field 'name', placeholder: 'Name'%>
+    <%= f.label 'building', 'Building' %>
+    <%= f.select :building, ['D.H.Hill', 'James.B.Hunt']%>
+    <%= f.label 'size', 'Size' %>
+    <%= f.select :size, ['small - 4 chairs','medium - 6 chairs', 'large - 12 chairs']%>
+  <%= f.submit 'Submit' %>
+<% end %>
