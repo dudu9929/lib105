@@ -16,11 +16,11 @@
     <%= link_to "Add booking", new_room_booking_path(room) %>
   </div>
 <% end %>
-<%= link_to 'New Room', new_room_path %>
+<%= link_to 'New Room', new_room_path() %>
 
 
 
-<%= form_tag(rooms_path, :method => "get", id: "search-form") do %>
+<%= form_tag(rooms_path(), :method => "get", id: "search-form") do %>
     <%= text_field_tag :name, params[:name], placeholder: "Search Name of Room" %>
     <%= text_field_tag :building, params[:building], placeholder: "Search Building of Room" %>
     <%= text_field_tag :size, params[:size], placeholder: "Search size of Room" %>

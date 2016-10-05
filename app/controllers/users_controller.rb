@@ -21,6 +21,8 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+
+
   def admin?
     current_user.permission < 2
   end
@@ -137,6 +139,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:room, :name, :email, :password, :password_confirmation)
     end
 end

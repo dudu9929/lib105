@@ -1,26 +1,33 @@
 class BookingsController < ApplicationController
   respond_to :html, :xml, :json
-  
-  before_action :find_room
-
+  before_action :find_room, :find_user
   def index
     @bookings = Booking.where("room_id = ? AND end_time >= ?", @room.id, Time.now).order(:start_time)
     respond_with @bookings
   end
-
-
-  def history
-    @bookings = Booking.where("room_id = ? ", @room.id).order(:start_time)
+  def mybooking
+    @bookings = Booking.where("user_id = ? AND end_time >= ?", current_user.id, Time.now).order(:start_time)
     respond_with @bookings
   end
 
+  def history
+    @bookings = Booking.where("room_id = ? AND start_time <= ? ", @room.id, Time.now).order(:start_time)
+    respond_with @bookings
+  end
+  def allhistory
+    @bookings = Booking.where("length= ? ","2").order(:start_time)
+
+
+    respond_with @bookings
+  end
   def new
-    @booking = Booking.new(room_id: @room.id)
+    @booking = Booking.new(room_id: @room.id, user_id: @user_id)
   end
 
   def create
-    @booking =  Booking.new(params[:booking].permit(:room_id, :start_time, :length))
+    @booking =  Booking.new(params[:booking].permit(:room_id, :start_time, :length,:user))
     @booking.room = @room
+    @booking.user = @user
     if @booking.save
       redirect_to room_bookings_path(@room, method: :get)
     else
@@ -36,7 +43,7 @@ class BookingsController < ApplicationController
     @booking = Booking.find(params[:id]).destroy
     if @booking.destroy
       flash[:notice] = "Booking: #{@booking.start_time.strftime('%e %b %Y %H:%M%p')} to #{@booking.end_time.strftime('%e %b %Y %H:%M%p')} deleted"
-      redirect_to room_bookings_path(@room)
+      redirect_to mybooking_user_bookings_path(current_user)
     else
       render 'index'
     end
@@ -56,7 +63,7 @@ class BookingsController < ApplicationController
       if request.xhr?
         render json: {status: :success}.to_json
       else
-        redirect_to room_bookings_path(@room)
+        redirect_to mybooking_user_bookings_path(current_user)
       end
     else
       render 'edit'
@@ -79,5 +86,13 @@ class BookingsController < ApplicationController
       @room = Room.find_by_id(params[:room_id])
     end
   end
+end
+def find_user
+
+    @user = User.find(current_user)
 
 end
+
+
+
+

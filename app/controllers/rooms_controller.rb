@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
       name = @room.name
       building=@room.building
       size=@room.size
-      redirect_to rooms_path
+      redirect_to rooms_path()
       flash[:notice] = "#{name} created"
     else
       render 'new'
@@ -42,7 +42,7 @@ class RoomsController < ApplicationController
   def destroy
     @room = Room.find(params[:id])
     @room.destroy
-    redirect_to rooms_path
+    redirect_to rooms_path()
   end
 
   def edit
@@ -54,14 +54,16 @@ class RoomsController < ApplicationController
     @room.update room_params
     if @room.save
       flash[:notice] = "Your room was updated succesfully"
-      redirect_to root_path
+      redirect_to rooms_path()
     else
       render 'edit'
     end
   end
 
   private
-
+  def set_room
+    @user = User.find(params[:id])
+  end
     def room_params
       params.require(:room).permit(:name,:building,:size,:status, :delete)
     end

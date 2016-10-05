@@ -5,6 +5,7 @@ class Room < ActiveRecord::Base
 
 
 
+
   def self.search(name,building,size)
     where("name LIKE ? and building LIKE? and size LIKE? ",  "%#{name}%","%#{building}%","%#{size}%")
   end

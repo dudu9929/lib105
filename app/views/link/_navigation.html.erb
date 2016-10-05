@@ -7,21 +7,19 @@
       <span class="glyphicon glyphicon-book navbar-brand" aria-hidden="true"></span>
       <%= link_to 'Main Page', user_path(current_user), class: "navbar-brand" %>
       <%= link_to 'Edit Profile', edit_user_path(current_user), class: "navbar-brand" %>
-      <%= link_to 'My Booking', 'books_path', class: "navbar-brand" %>
-
+      <%= link_to 'My Booking', mybooking_user_bookings_path(current_user), class: "navbar-brand" %>
+        <%= link_to 'See Rooms', rooms_path, class: "navbar-brand" %>
 
       <% if member? %>
-          <%= link_to 'My History', 'history_room_bookings_path' ,class: "navbar-brand"%>
+          <%= link_to 'My History', history_room_bookings_path(current_user) ,class: "navbar-brand"%>
       <% end %>
 
       <% if admin? %>
           <%= link_to 'All User', users_path, class: "navbar-brand" %>
-          <%= link_to 'Add Room', new_room_path, class: "navbar-brand" %>
-          <%= link_to 'All History', 'histories_path', class: "navbar-brand" %>
+          <%= link_to 'Add Room', new_room_path(), class: "navbar-brand" %>
+          <%= link_to 'All History', allhistory_user_bookings_path(current_user), class: "navbar-brand" %>
           <%= link_to 'New Admin', new_user_path, class: "navbar-brand" %>
       <% end %>
-
-      <%= link_to 'Searching Room', rooms_path, class: "navbar-brand" %>
       <%= link_to 'Logout', logout_path, class: "navbar-brand" %>
         </nav>
     </div>
